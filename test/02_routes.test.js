@@ -12,13 +12,19 @@ const Test = require('../db/models/test');
 
 describe('Routes', () => {
   before(() => {
-    return db.sync({ force: true });
+    return db.sync({
+      force: true
+    });
   });
 
   afterEach(() => {
     return Promise.all([
-      Student.truncate({ cascade: true }),
-      Test.truncate({ cascade: true }),
+      Student.truncate({
+        cascade: true
+      }),
+      Test.truncate({
+        cascade: true
+      }),
     ]);
   });
 
@@ -28,8 +34,7 @@ describe('Routes', () => {
     let charlie;
 
     beforeEach(() => {
-      const creatingStudents = [
-        {
+      const creatingStudents = [{
           firstName: 'Pepper',
           lastName: 'Potts',
           email: 'saltn@pepper.com',
@@ -53,7 +58,7 @@ describe('Routes', () => {
     });
 
     describe('GET /students', () => {
-      xit('retrieves all the students', () => {
+      it('retrieves all the students', () => {
         return agent
           .get('/students')
           .expect('Content-Type', /json/)
@@ -66,7 +71,7 @@ describe('Routes', () => {
     });
 
     describe('GET /students/:id', () => {
-      xit('retrieves a single student by their id', () => {
+      it('retrieves a single student by their id', () => {
         return agent
           .get(`/students/${pepper.id}`)
           .expect(200)
@@ -76,13 +81,13 @@ describe('Routes', () => {
           });
       });
 
-      xit('returns a 404 error if student does not exist in DB', () => {
+      it('returns a 404 error if student does not exist in DB', () => {
         return agent.get('/students/09432').expect(404);
       });
     });
 
     describe('POST /students', () => {
-      xit('creates a new Student instance', () => {
+      it('creates a new Student instance', () => {
         return agent
           .post('/students')
           .send({
@@ -102,7 +107,9 @@ describe('Routes', () => {
       xit('updates an instance of a student', () => {
         return agent
           .put(`/students/${pepper.id}`)
-          .send({ firstName: 'Salty' })
+          .send({
+            firstName: 'Salty'
+          })
           .expect(200)
           .expect('Content-Type', /json/)
           .expect(res => {
@@ -131,8 +138,7 @@ describe('Routes', () => {
     let hardTest;
     let crayTest;
     beforeEach(() => {
-      const creatingTests = [
-        {
+      const creatingTests = [{
           subject: 'Tree-Climbing',
           grade: 81,
         },
@@ -158,13 +164,17 @@ describe('Routes', () => {
     });
     afterEach(() => {
       return Promise.all([
-        Student.truncate({ cascade: true }),
-        Test.truncate({ cascade: true }),
+        Student.truncate({
+          cascade: true
+        }),
+        Test.truncate({
+          cascade: true
+        }),
       ]);
     });
 
     describe('GET /tests', () => {
-      xit('retrieves all tests', () => {
+      it('retrieves all tests', () => {
         return agent
           .get('/tests')
           .expect(200)
