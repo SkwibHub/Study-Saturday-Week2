@@ -39,11 +39,26 @@ router.put(',/:id', async function (req, res) {
         if (!myStudent) {
             res.sendStatus(404);
         }
-        
+        const putStudent = req.body;
+
     } catch (err) {
         next(err);
     }
-})
+});
+
+router.delete('/:id', async function(req, res) {
+    try {
+        const studentId = req.params.id;
+        await Student.destroy({
+            where: {
+                id: studentId
+            }
+        });
+        res.sendStatus(204);
+    } catch (err) {
+        next(err)
+    }
+});
 
 
 module.exports = router;
